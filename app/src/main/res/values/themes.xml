@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.HeimaPlayer" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.HeimaPlayer.AppCompact" parent="Theme.AppCompat.Light.NoActionBar" />
+
+    <style name="Theme.HeimaPlayer.AppCompact.FullScreen">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+
+    </style>
+
+
+</resources>

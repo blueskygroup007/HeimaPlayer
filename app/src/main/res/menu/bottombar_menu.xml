@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/black"
+    app:bbn_badgeColor="#FFFF0000"
+    app:bbn_rippleColor="#33ffffff">
+    <item
+        android:id="@+id/bbn_home"
+        android:color="@color/purple_200"
+        android:icon="@drawable/ic_home_24"
+        android:title="首页" />
+    <item
+        android:id="@+id/bbn_mv"
+        android:color="@android:color/holo_green_dark"
+        android:icon="@drawable/ic_mv_24"
+        android:title="MV" />
+    <item
+        android:id="@+id/bbn_mvlist"
+        android:color="@android:color/holo_orange_dark"
+        android:icon="@drawable/ic_mvlist_24"
+        android:title="悦单" />
+    <item
+        android:id="@+id/bbn_vlist"
+        android:color="#FF5252"
+        android:icon="@drawable/ic_vlist_24"
+        android:title="V榜" />
+</menu>

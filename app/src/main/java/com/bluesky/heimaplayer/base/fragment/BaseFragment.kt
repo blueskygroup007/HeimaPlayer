@@ -15,20 +15,22 @@ abstract class BaseFragment : Fragment() {
         init()
     }
 
-    protected fun init() {
-        TODO("Not yet implemented")
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        initView()
-        return super.onCreateView(inflater, container, savedInstanceState)
+        //返回自定义的view，注释了父类的方法。父类中没有view构建吗？initView不应该放在onViewCreated中吗？
+        return initView()
+        //return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    abstract fun initView()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -36,11 +38,15 @@ abstract class BaseFragment : Fragment() {
         initData()
     }
 
+    protected open fun init() {
+    }
     protected open fun initData() {
     }
 
     protected open fun initListener() {
     }
+
+    abstract fun initView():View
 
     fun myToast(msg: String) {
         activity?.runOnUiThread { Toast.makeText(activity, msg, Toast.LENGTH_SHORT) }

@@ -1,4 +1,9 @@
 目前进度：
     P240 09.主界面tab切换01
     P242
-    首页的fragment没有被加载（初始化时）
+    //todo 首页的fragment没有被加载（初始化时)
+        强制选中home项以激活itemselect回调
+        onMenuItemSelect(R.id.bbn_home, 0, true)
+
+    P245
+    //todo splash的缩放动画不正常

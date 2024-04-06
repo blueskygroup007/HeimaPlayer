@@ -6,6 +6,24 @@ import timber.log.Timber;
 
 public class URLProviderUtils {
 
+    public static String getHaoKanVideos(int page,int size){
+        String url="https://api.apiopen.top/api/getHaoKanVideo"
+                +"?page="
+                +page
+                +"&size="
+                +size;
+        return url;
+    }
+
+    public static String getMiniVideos(int page,int size){
+        String url="https://api.apiopen.top/api/getMiniVideo"
+                +"?page="
+                +page
+                +"&size="
+                +size;
+        return url;
+    }
+
     public static String getHotVideos(int size) {
         String key = "5debe981e02fa21c8f649d1d3c4add52";
         String url = "http://apis.juhe.cn/fapig/douyin/billboard"

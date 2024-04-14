@@ -27,6 +27,9 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeHolder>() {
     }
 
     fun loadMore(datas: List<HaoKanVideoBean>) {
+        //加载更多时,data数组中并无progress的条目,只需要拼接上新item,
+        //隐藏掉progress(swipeRefreshLayout.isRefreshing = false)
+        //notifyDataSetChanged也能保持当前滚动位置
         this.datas.addAll(datas)
         notifyDataSetChanged()
     }

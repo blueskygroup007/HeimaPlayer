@@ -10,8 +10,11 @@ import com.bluesky.heimaplayer.R
 import com.bluesky.heimaplayer.adapter.HomeAdapter
 import com.bluesky.heimaplayer.base.fragment.BaseFragment
 import com.bluesky.heimaplayer.model.HaoKanResult
+import com.bluesky.heimaplayer.model.HaoKanVideoBean
+import com.bluesky.heimaplayer.presenter.impl.HomePresenterImpl
 import com.bluesky.heimaplayer.util.ThreadUtil
 import com.bluesky.heimaplayer.util.URLProviderUtils
+import com.bluesky.heimaplayer.view.HomeView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.Call
@@ -22,7 +25,9 @@ import okhttp3.Response
 import okio.IOException
 import timber.log.Timber
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(),HomeView {
+
+
     val recyclerView: RecyclerView by lazy { root.findViewById(R.id.rv_home) }
     val swipeRefreshLayout: SwipeRefreshLayout by lazy { root.findViewById(R.id.srl_swipe) }
     val root: View by lazy {
@@ -30,8 +35,10 @@ class HomeFragment : BaseFragment() {
     }
     val adapter: HomeAdapter by lazy { HomeAdapter() }
 
+    val presenter by lazy { HomePresenterImpl(this) }
+
     companion object {
-        var page: Int=1
+        var page: Int = 1
     }
 
     override fun initView(): View {
@@ -53,7 +60,7 @@ class HomeFragment : BaseFragment() {
 
         swipeRefreshLayout.setOnRefreshListener {
             //刷新监听
-            loadDatas(page, 10)
+            presenter.loadDatas(page,10)
         }
 
         recyclerView.addOnScrollListener(object : OnScrollListener() {
@@ -65,21 +72,37 @@ class HomeFragment : BaseFragment() {
                     if (manager is LinearLayoutManager) {
                         val position =
                             manager.findLastCompletelyVisibleItemPosition()
-                        if (position == adapter.itemCount) {
-                            loadDatas(page++, 10)
+                        Timber.e("position=$position")
+                        if (position == adapter.itemCount - 1) {
+                            presenter.loadDatas(page++, 10)
                         }
                     }
                 }
             }
         })
-
-
     }
 
-    /**
-     * 从当前条目再读取一定数量的item
-     */
-    /*    private fun loadMore(page: Int, size: Int) {
+
+    override fun initData() {
+        super.initData()
+        presenter.loadDatas(1,10)
+    }
+
+    override fun onLoadError(e: java.io.IOException) {
+        swipeRefreshLayout.isRefreshing = false
+    }
+
+    override fun onLoadSuccess(list: List<HaoKanVideoBean>) {
+        if (page == 1) {//第一页为下拉刷新,其他页为下拉加载更多
+            adapter.updateList(list)
+        } else {
+            adapter.loadMore(list)
+        }
+        //隐藏刷新控件
+        swipeRefreshLayout.isRefreshing = false
+    }
+
+    /*    private fun loadDatas(page: Int, size: Int) {
             val path = URLProviderUtils.getHaoKanVideos(page, size)
             val client = OkHttpClient()
             val request = Request.Builder().get().url(path).build()
@@ -94,61 +117,26 @@ class HomeFragment : BaseFragment() {
 
                 override fun onResponse(call: Call, response: Response) {
                     val result = response.body.string()
+
                     Timber.e(result)
                     val gson = Gson()
-                    val homeItem = gson.fromJson(result, object : TypeToken<HaoKanResult>() {})
+                    //当解析的json类型不确定,或者为泛型时,使用TypeToken
+                    //val homeItem = gson.fromJson(result, object : TypeToken<HaoKanResult>() {})
+                    val resultData = gson.fromJson(result, HaoKanResult::class.java)
                     ThreadUtil.runOnMainThread(object : Runnable {
                         override fun run() {
-                            adapter.updateList(homeItem.result.haokanVideoBean)
+                            if (page == 1) {//第一页为下拉刷新,其他页为下拉加载更多
+                                adapter.updateList(resultData.result.list)
+                            } else {
+                                adapter.loadMore(resultData.result.list)
+                            }
                             //隐藏刷新控件
                             swipeRefreshLayout.isRefreshing = false
                         }
                     })
-                    Timber.e(homeItem.result.haokanVideoBean.get(0).toString())
+                    Timber.e(resultData.result.list.get(0).toString())
                 }
 
             })
         }*/
-
-    override fun initData() {
-        super.initData()
-        Timber.plant(Timber.DebugTree())
-        Timber.tag(this.javaClass.simpleName)
-        loadDatas(1, 10)
-    }
-
-    private fun loadDatas(page: Int, size: Int) {
-        val path = URLProviderUtils.getHaoKanVideos(page, size)
-        val client = OkHttpClient()
-        val request = Request.Builder().get().url(path).build()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Timber.e("请求失败!")
-                //隐藏刷新控件
-                ThreadUtil.runOnMainThread {
-                    swipeRefreshLayout.isRefreshing = false
-                }
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val result = response.body.string()
-
-                Timber.e(result)
-                val gson = Gson()
-                /*                val homeItem =
-                                    gson.fromJson<HomeItemBean>(result, object : TypeToken<HomeItemBean>() {})*/
-
-                val homeItem = gson.fromJson(result, object : TypeToken<HaoKanResult>() {})
-                ThreadUtil.runOnMainThread(object : Runnable {
-                    override fun run() {
-                        adapter.updateList(homeItem.result.haokanVideoBean)
-                        //隐藏刷新控件
-                        swipeRefreshLayout.isRefreshing = false
-                    }
-                })
-                Timber.e(homeItem.result.haokanVideoBean.get(0).toString())
-            }
-
-        })
-    }
 }

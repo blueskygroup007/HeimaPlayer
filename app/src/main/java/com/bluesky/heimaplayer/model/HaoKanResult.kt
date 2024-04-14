@@ -8,7 +8,7 @@ package com.bluesky.heimaplayer.model
  */
 data class HaoKanResult (var code:Int, var message:String, var result :HaoKanBean)
 
-data class HaoKanBean (var total:Int,var haokanVideoBean:List<HaoKanVideoBean>)
+data class HaoKanBean (var total:Int,var list:List<HaoKanVideoBean>)
 
 data class HaoKanVideoBean(
     var id: Int,

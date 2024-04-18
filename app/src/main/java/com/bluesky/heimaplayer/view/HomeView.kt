@@ -10,6 +10,6 @@ import java.io.IOException
  * Description:
  */
 interface HomeView {
-    fun onLoadError(e: IOException)
+    fun onLoadError(e: Exception)
     fun onLoadSuccess(list: List<HaoKanVideoBean>)
 }

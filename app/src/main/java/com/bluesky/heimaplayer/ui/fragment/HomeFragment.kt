@@ -88,9 +88,10 @@ class HomeFragment : BaseFragment(),HomeView {
         presenter.loadDatas(1,10)
     }
 
-    override fun onLoadError(e: java.io.IOException) {
+    override fun onLoadError(e: Exception) {
         swipeRefreshLayout.isRefreshing = false
     }
+
 
     override fun onLoadSuccess(list: List<HaoKanVideoBean>) {
         if (page == 1) {//第一页为下拉刷新,其他页为下拉加载更多
@@ -102,41 +103,4 @@ class HomeFragment : BaseFragment(),HomeView {
         swipeRefreshLayout.isRefreshing = false
     }
 
-    /*    private fun loadDatas(page: Int, size: Int) {
-            val path = URLProviderUtils.getHaoKanVideos(page, size)
-            val client = OkHttpClient()
-            val request = Request.Builder().get().url(path).build()
-            client.newCall(request).enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    Timber.e("请求失败!")
-                    //隐藏刷新控件
-                    ThreadUtil.runOnMainThread {
-                        swipeRefreshLayout.isRefreshing = false
-                    }
-                }
-
-                override fun onResponse(call: Call, response: Response) {
-                    val result = response.body.string()
-
-                    Timber.e(result)
-                    val gson = Gson()
-                    //当解析的json类型不确定,或者为泛型时,使用TypeToken
-                    //val homeItem = gson.fromJson(result, object : TypeToken<HaoKanResult>() {})
-                    val resultData = gson.fromJson(result, HaoKanResult::class.java)
-                    ThreadUtil.runOnMainThread(object : Runnable {
-                        override fun run() {
-                            if (page == 1) {//第一页为下拉刷新,其他页为下拉加载更多
-                                adapter.updateList(resultData.result.list)
-                            } else {
-                                adapter.loadMore(resultData.result.list)
-                            }
-                            //隐藏刷新控件
-                            swipeRefreshLayout.isRefreshing = false
-                        }
-                    })
-                    Timber.e(resultData.result.list.get(0).toString())
-                }
-
-            })
-        }*/
 }

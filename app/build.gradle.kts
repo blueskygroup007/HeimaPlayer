@@ -62,6 +62,8 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.12")
     implementation("com.google.code.gson:gson:2.10.1")
+
+
     implementation("com.squareup.picasso:picasso:2.71828")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -74,4 +76,6 @@ dependencies {
 
     //implementation("com.roughike:bottom-bar:2.3.1")
     implementation("it.sephiroth.android.library.bottomnavigation:bottom-navigation:3.0.0")
+    //picasso的转换器插件
+    implementation("jp.wasabeef:picasso-transformations:2.4.0")
 }

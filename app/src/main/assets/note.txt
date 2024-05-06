@@ -11,3 +11,7 @@
     P248
     //todo 使用聚合数据的api.
     //todo 还可以使用 https://api.apiopen.top/swagger/index.html
+
+    P263 03:00
+    //todo 同home页相同，swiperefreshLayout包裹Recyclerview。下拉刷新有监听，有进度条。
+    //todo 但是上拉加载更多，使用的是在RecyclerView中自定义的一个item。如何优美解决。

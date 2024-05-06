@@ -6,6 +6,12 @@ import timber.log.Timber;
 
 public class URLProviderUtils {
 
+    /**
+     * 获取首页视频数据
+     * @param page
+     * @param size
+     * @return
+     */
     public static String getHaoKanVideos(int page,int size){
         String url="https://api.apiopen.top/api/getHaoKanVideo"
                 +"?page="
@@ -15,6 +21,12 @@ public class URLProviderUtils {
         return url;
     }
 
+    /**
+     * 获取悦单视频数据
+     * @param page
+     * @param size
+     * @return
+     */
     public static String getMiniVideos(int page,int size){
         String url="https://api.apiopen.top/api/getMiniVideo"
                 +"?page="
@@ -257,4 +269,3 @@ public class URLProviderUtils {
         return android.os.Build.MODEL;
     }
 }
-

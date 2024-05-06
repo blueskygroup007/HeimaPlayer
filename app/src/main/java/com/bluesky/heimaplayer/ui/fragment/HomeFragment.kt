@@ -25,7 +25,7 @@ import okhttp3.Response
 import okio.IOException
 import timber.log.Timber
 
-class HomeFragment : BaseFragment(),HomeView {
+class HomeFragment : BaseFragment(), HomeView {
 
 
     val recyclerView: RecyclerView by lazy { root.findViewById(R.id.rv_home) }
@@ -37,9 +37,7 @@ class HomeFragment : BaseFragment(),HomeView {
 
     val presenter by lazy { HomePresenterImpl(this) }
 
-    companion object {
-        var page: Int = 1
-    }
+    var page: Int = 1
 
     override fun initView(): View {
         return root
@@ -60,7 +58,7 @@ class HomeFragment : BaseFragment(),HomeView {
 
         swipeRefreshLayout.setOnRefreshListener {
             //刷新监听
-            presenter.loadDatas(page,10)
+            presenter.loadDatas(1, 10)
         }
 
         recyclerView.addOnScrollListener(object : OnScrollListener() {
@@ -85,7 +83,7 @@ class HomeFragment : BaseFragment(),HomeView {
 
     override fun initData() {
         super.initData()
-        presenter.loadDatas(1,10)
+        presenter.loadDatas(1, 10)
     }
 
     override fun onLoadError(e: Exception) {

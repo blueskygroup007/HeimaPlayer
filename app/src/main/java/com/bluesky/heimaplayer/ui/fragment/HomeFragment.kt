@@ -9,20 +9,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bluesky.heimaplayer.R
 import com.bluesky.heimaplayer.adapter.HomeAdapter
 import com.bluesky.heimaplayer.base.fragment.BaseFragment
-import com.bluesky.heimaplayer.model.HaoKanResult
 import com.bluesky.heimaplayer.model.HaoKanVideoBean
 import com.bluesky.heimaplayer.presenter.impl.HomePresenterImpl
-import com.bluesky.heimaplayer.util.ThreadUtil
-import com.bluesky.heimaplayer.util.URLProviderUtils
 import com.bluesky.heimaplayer.view.HomeView
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
-import okio.IOException
 import timber.log.Timber
 
 class HomeFragment : BaseFragment(), HomeView {
@@ -58,7 +47,8 @@ class HomeFragment : BaseFragment(), HomeView {
 
         swipeRefreshLayout.setOnRefreshListener {
             //刷新监听
-            presenter.loadDatas(1, 10)
+            page=1
+            presenter.loadDatas(page, 10)
         }
 
         recyclerView.addOnScrollListener(object : OnScrollListener() {
@@ -72,7 +62,7 @@ class HomeFragment : BaseFragment(), HomeView {
                             manager.findLastCompletelyVisibleItemPosition()
                         Timber.e("position=$position")
                         if (position == adapter.itemCount - 1) {
-                            presenter.loadDatas(page++, 10)
+                            presenter.loadDatas(++page, 10)
                         }
                     }
                 }

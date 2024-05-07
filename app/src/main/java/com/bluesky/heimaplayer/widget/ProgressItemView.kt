@@ -2,10 +2,12 @@ package com.bluesky.heimaplayer.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import com.bluesky.heimaplayer.R
 
-class ProgressItemView : LinearLayout{
+class ProgressItemView : RelativeLayout {
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
@@ -14,7 +16,8 @@ class ProgressItemView : LinearLayout{
         attrs,
         defStyleAttr
     )
+
     init {
-        inflate(context, R.layout.progress_item_view,this)
+        inflate(context, R.layout.progress_item_view, this)
     }
 }

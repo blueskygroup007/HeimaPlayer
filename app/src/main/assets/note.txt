@@ -12,6 +12,10 @@
     //todo 使用聚合数据的api.
     //todo 还可以使用 https://api.apiopen.top/swagger/index.html
 
-    P263 03:00
+    P263
     //todo 同home页相同，swiperefreshLayout包裹Recyclerview。下拉刷新有监听，有进度条。
     //todo 但是上拉加载更多，使用的是在RecyclerView中自定义的一个item。如何优美解决。
+
+    P265
+    //todo 1.还是使用home中的方法解决上拉加载更多
+    //todo 2.将ProgressItemView类继承自RelativeLayout,解决了加载进度条的居中问题,原因未知

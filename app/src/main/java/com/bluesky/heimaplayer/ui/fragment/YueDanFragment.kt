@@ -18,7 +18,7 @@ class YueDanFragment : BaseFragment(), YueDanView {
     val recyclerView: RecyclerView by lazy { root.findViewById(R.id.rv_list) }
     val swipeRefreshLayout: SwipeRefreshLayout by lazy { root.findViewById(R.id.srl_swipe) }
     val root: View by lazy {
-        View.inflate(context, R.layout.fragment_list, null)
+        View.inflate(context, R.layout.fragment_yuedan, null)
     }
     val adapter: YueDanAdapter by lazy { YueDanAdapter() }
     val presenter: YueDanPresenter by lazy { YueDanPresenterImpl(this) }
@@ -35,7 +35,8 @@ class YueDanFragment : BaseFragment(), YueDanView {
         swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.YELLOW, Color.GREEN)
         swipeRefreshLayout.setOnRefreshListener {
             //下拉刷新
-            presenter.loadDatas(1, 10)
+            page=1
+            presenter.loadDatas(page, 10)
         }
 
         recyclerView.addOnScrollListener(object : OnScrollListener() {
@@ -46,7 +47,7 @@ class YueDanFragment : BaseFragment(), YueDanView {
                     if (manager is LinearLayoutManager) {
                         val position = manager.findLastCompletelyVisibleItemPosition()
                         if (position == adapter.itemCount - 1) {
-                            presenter.loadDatas(page++, 10)
+                            presenter.loadDatas(++page, 10)
                         }
                     }
                 }

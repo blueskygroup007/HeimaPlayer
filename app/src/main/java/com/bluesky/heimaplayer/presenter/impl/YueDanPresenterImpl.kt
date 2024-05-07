@@ -12,7 +12,7 @@ import com.bluesky.heimaplayer.view.YueDanView
 class YueDanPresenterImpl(var yueDanView: YueDanView) : YueDanPresenter,
     ResponseCallback<YueDanBody> {
     override fun loadDatas(i: Int, i1: Int) {
-        YueDanRequest(1,10,this).excute()
+        YueDanRequest(1, 10, this).excute()
         yueDanView.displayProgressBar()
     }
 
@@ -21,7 +21,7 @@ class YueDanPresenterImpl(var yueDanView: YueDanView) : YueDanPresenter,
     }
 
     override fun onSuccess(response: YueDanBody) {
-    yueDanView.onSuccess(response)
+        yueDanView.onSuccess(response)
     }
 
 
